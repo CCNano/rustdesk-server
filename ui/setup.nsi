@@ -15,7 +15,7 @@
 !define PRODUCT_NAME "rustdesk_server"
 !define PRODUCT_DESCRIPTION "Installer for ${PRODUCT_NAME}"
 !define COPYRIGHT "Copyright © 2021"
-!define VERSION "1.1.7"
+!define VERSION "1.1.8"
 
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
@@ -143,10 +143,10 @@ Section "Install"
   CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe"
   CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
 
-  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=in action=allow program="$INSTDIR\hbbs.exe" enable=yes'
-  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=out action=allow program="$INSTDIR\hbbs.exe" enable=yes'
-  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=in action=allow program="$INSTDIR\hbbr.exe" enable=yes'
-  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=out action=allow program="$INSTDIR\hbbr.exe" enable=yes'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=in action=allow program="$INSTDIR\bin\hbbs.exe" enable=yes'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=out action=allow program="$INSTDIR\bin\hbbs.exe" enable=yes'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=in action=allow program="$INSTDIR\bin\hbbr.exe" enable=yes'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="${APP_NAME}" dir=out action=allow program="$INSTDIR\bin\hbbr.exe" enable=yes'
   ExecWait 'powershell.exe -NoProfile -windowstyle hidden try { [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 } catch {}; Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/p/?LinkId=2124703" -OutFile "$$env:TEMP\MicrosoftEdgeWebview2Setup.exe" ; Start-Process -FilePath "$$env:TEMP\MicrosoftEdgeWebview2Setup.exe" -ArgumentList ($\'/silent$\', $\'/install$\') -Wait'
 SectionEnd
 
